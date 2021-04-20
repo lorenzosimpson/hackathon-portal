@@ -5,7 +5,7 @@ import { fetchHackathons } from '../actions/index';
 import { useDispatch, useSelector } from 'react-redux';
 import { Loader } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-
+import { withAuthenticationRequired } from '@auth0/auth0-react';
 const Dashboard = () => {
     const hackathons = useSelector(state => state.hackathons);
 
@@ -256,4 +256,6 @@ const Dashboard = () => {
         </div>
   )
 }
-export default Dashboard;
+export default withAuthenticationRequired(Dashboard, {
+    onRedirecting: () => <Loader />,
+  });

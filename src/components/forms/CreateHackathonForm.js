@@ -4,7 +4,8 @@ import { AvForm, AvField, AvInput } from 'availity-reactstrap-validation';
 import DateTimePicker from 'react-datetime-picker';
 import { createHackathon } from '../../actions/index';
 import { useDispatch } from 'react-redux';
-import { useAuth0 } from '@auth0/auth0-react';
+import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
+import { Loader } from 'semantic-ui-react';
 
 function CreateHackathonForm(props) {
     const [end_date, changeEndDate] = useState(new Date());
@@ -80,7 +81,7 @@ function CreateHackathonForm(props) {
             {fields.map(field => (
                 <div className="form-group mb-2">
                 {(field.type) === "checkbox" ? (
-                    <div className="form-check">
+                    <div className="form-check pl-0">
                         <Label check>
                         <AvInput onChange={() => setChecked(!checked)}
                         type={field.type} trueValue={true} 
@@ -129,4 +130,6 @@ function CreateHackathonForm(props) {
     );
 }
 
-export default CreateHackathonForm;
+export default withAuthenticationRequired(CreateHackathonForm, {
+    onRedirecting: () => <Loader />,
+  });
