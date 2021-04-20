@@ -81,7 +81,7 @@ function CreateHackathonForm(props) {
             {fields.map(field => (
                 <div className="form-group mb-2">
                 {(field.type) === "checkbox" ? (
-                    <div className="form-check pl-0">
+                    <div className="form-check">
                         <Label check>
                         <AvInput onChange={() => setChecked(!checked)}
                         type={field.type} trueValue={true} 
