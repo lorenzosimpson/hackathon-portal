@@ -2,6 +2,16 @@
   margin-right: 5px;
 }
 
+.navbar-brand.logo, .logo {
+  background-image: url('./assets/HackathonLogo.png') !important;
+  padding: 0;
+  height: 3.1em;
+  width: 7.2em;
+  background-color: inherit;
+  box-shadow: none;
+}
+
+
 /* Fix for use only flexbox in content area */
 .next-steps .row {
   margin-bottom: 0;
@@ -55,4 +65,8 @@ footer .logo {
 
 h2 {
   font-size: 1.5rem !important;
+}
+
+.content-wrapper-bg {
+  background-color: lightgray;
 }

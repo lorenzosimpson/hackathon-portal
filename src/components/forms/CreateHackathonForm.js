@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
 import { Loader } from 'semantic-ui-react';
 import { Redirect } from 'react-router';
+import ModalCommon from '../ModalCommon';
 
 function CreateHackathonForm(props) {
     const [end_date, changeEndDate] = useState(new Date());
@@ -72,15 +73,17 @@ function CreateHackathonForm(props) {
         return <Redirect to={redirectTo} />
     }
 
-    if (error) {
-       return <div>{error.request.statusText}</div>
-    }
     
     return (
         <Container>
+            {error && (
+                <ModalCommon 
+                modalBody={error.request.statusText}
+                modalTitle="Error"
+                />
+            )}
             <h1>Let's Create a Hackathon</h1>
         <AvForm onSubmit={handleValidSubmit}>
-            <div className="col">
                 <Card>
                 <CardBody>
             <FormGroup>
@@ -130,7 +133,6 @@ function CreateHackathonForm(props) {
             </FormGroup>
             </CardBody>
             </Card>
-            </div>
         </AvForm>
         </Container>
     );
