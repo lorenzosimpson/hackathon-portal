@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {Card, CardBody, Container, Form, FormGroup, Input, Label} from 'reactstrap';
 import { AvForm, AvField, AvInput } from 'availity-reactstrap-validation';
 import DateTimePicker from 'react-datetime-picker';
-import { createHackathon } from '../../actions/index';
+import { createHackathon, createHackathonAndFetchHackathons } from '../../actions/index';
 import { useDispatch } from 'react-redux';
 import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
 import { Loader } from 'semantic-ui-react';
@@ -63,7 +63,8 @@ function CreateHackathonForm(props) {
              is_open: checked
             }
         console.log(body)
-       dispatch(createHackathon(creatorId, body))
+       dispatch(createHackathonAndFetchHackathons(creatorId, body))
+       props.history.push('/dashboard');
     }
 
     function handleInvalidSubmit(e) {

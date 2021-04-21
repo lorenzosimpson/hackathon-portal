@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import { withAuthenticationRequired } from '@auth0/auth0-react';
 const Dashboard = () => {
     const hackathons = useSelector(state => state.hackathons);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         moveHackathonsToCorrectTable(hackathons)

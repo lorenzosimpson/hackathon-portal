@@ -1,4 +1,4 @@
-import { FETCH_ALL_HACKATHONS, FETCH_START, POST_HACKATHON, POST_START } from "../actions"
+import { FETCH_START, FETCH_HACKATHONS_SUCCESS, POST_SUCCESS, POST_START } from "../actions"
 
 export const initialState = {
     hackathons: [],
@@ -12,7 +12,7 @@ export const rootReducer = (state, action) => {
                 ...state,
                 isFetching: true
             }
-        case POST_HACKATHON: {
+        case POST_SUCCESS: {
             return {
                 ...state,
                 isFetching: false
@@ -21,9 +21,10 @@ export const rootReducer = (state, action) => {
         case FETCH_START:
             return {
                 ...state,
-                isFetching: true
+                isFetching: true,
             }
-        case FETCH_ALL_HACKATHONS:
+        case FETCH_HACKATHONS_SUCCESS:
+            console.log(action.payload)
             return {
                 ...state,
                 hackathons: [...action.payload],

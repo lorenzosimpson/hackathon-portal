@@ -30,7 +30,6 @@ initFontAwesome();
 const App = () => {
   const { isLoading, error, user, isAuthenticated, getAccessTokenSilently } = useAuth0();
   const { apiOrigin = "http://localhost:3001", audience } = getConfig();
-  const hackathons = useSelector(state => state.hackathons);
   const dispatch = useDispatch()
 
     const fetch = () => {
@@ -73,7 +72,6 @@ const App = () => {
     return <Loading />;
   }
 
-  
 
   return (
     <Router history={history}>
@@ -85,8 +83,8 @@ const App = () => {
             <Route path="/profile" component={Profile} />
             <Route path="/external-api" component={ExternalApi} />
             <Route path="/hackathons/" component={HackathonList} />
-            <Route exact path='/dashboard'component={() => <Dashboard hackathons={hackathons} />}/>
-            <Route exact path="/new" component={CreateHackathonForm} />
+            <Route exact path='/dashboard'component={() => <Dashboard />}/>
+            <Route exact path='/new' render={(props) => (<CreateHackathonForm {...props} />)} />
           </Switch>
         </Container>
         <Footer />
