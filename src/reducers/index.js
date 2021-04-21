@@ -1,8 +1,10 @@
-import { FETCH_ALL_HACKATHONS, FETCH_START, POST_HACKATHON, POST_START } from "../actions"
+import { FETCH_START, FETCH_HACKATHONS_SUCCESS, POST_SUCCESS, POST_START, FETCH_FAILURE, REDIRECT_TO, REDIRECT_COMPLETE } from "../actions"
 
 export const initialState = {
     hackathons: [],
-    isFetching: false
+    isFetching: false,
+    error: "",
+    redirectTo: ""
 }
 
 export const rootReducer = (state, action) => {
@@ -10,24 +12,49 @@ export const rootReducer = (state, action) => {
         case POST_START:
             return {
                 ...state,
-                isFetching: true
+                isFetching: true,
+                redirectTo: ""
             }
-        case POST_HACKATHON: {
+        case POST_SUCCESS: {
             return {
                 ...state,
-                isFetching: false
+                isFetching: false,
+                redirectTo: ""
+
             }
         }
         case FETCH_START:
             return {
                 ...state,
-                isFetching: true
+                isFetching: true,
+                redirectTo: ""
             }
-        case FETCH_ALL_HACKATHONS:
+        case FETCH_HACKATHONS_SUCCESS:
+            console.log(action.payload)
             return {
                 ...state,
                 hackathons: [...action.payload],
-                isFetching: false
+                isFetching: false,
+            }
+        case FETCH_FAILURE:
+            return {
+                ...state,
+                isFetching: false,
+                error: action.payload,
+                redirectTo: ""
+            }
+        case REDIRECT_TO:
+            console.log('redirect to called') 
+            return {
+                ...state,
+                isFetching: false,
+                error: false,
+                redirectTo: action.payload
+            }
+        case REDIRECT_COMPLETE:
+            return {
+                ...state,
+                redirectTo: ""
             }
         default:
             return state

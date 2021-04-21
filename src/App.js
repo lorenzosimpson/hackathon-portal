@@ -18,28 +18,21 @@ import { fetchHackathons } from './actions/index';
 // styles
 import "./App.css";
 import "./dashboard.css";
+import "./sidebars.css";
 
 // fontawesome
 import initFontAwesome from "./utils/initFontAwesome";
 import HackathonList from "./components/HackathonList";
 import Dashboard from "./components/Dashboard";
 import CreateHackathonForm from "./components/forms/CreateHackathonForm";
+import Sidebar from './components/nav/Sidebar';
 
 initFontAwesome();
 
 const App = () => {
   const { isLoading, error, user, isAuthenticated, getAccessTokenSilently } = useAuth0();
   const { apiOrigin = "http://localhost:3001", audience } = getConfig();
-  const hackathons = useSelector(state => state.hackathons);
   const dispatch = useDispatch()
-
-    const fetch = () => {
-      dispatch(fetchHackathons())
-    } 
-
-      useEffect(() => {
-        fetch()
-      }, [])
 
 
   const putUser = async () => {
@@ -73,25 +66,26 @@ const App = () => {
     return <Loading />;
   }
 
-  
 
   return (
-    <Router history={history}>
+    
       <div id="app" className="d-flex flex-column h-100">
-        <NavBar />
-        <Container className="flex-grow-1 mt-5">
+
+      <NavBar />
+        <Container className="flex-grow-1">
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/profile" component={Profile} />
             <Route path="/external-api" component={ExternalApi} />
             <Route path="/hackathons/" component={HackathonList} />
-            <Route exact path='/dashboard'component={() => <Dashboard hackathons={hackathons} />}/>
-            <Route exact path="/new" component={CreateHackathonForm} />
+            <Route exact path='/dashboard'component={() => <Dashboard />}/>
+            <Route exact path='/new' render={(props) => (<CreateHackathonForm {...props} />)} />
           </Switch>
         </Container>
+        
         <Footer />
-      </div>
-    </Router>
+        </div>
+
   );
 };
 

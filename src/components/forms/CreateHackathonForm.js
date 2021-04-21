@@ -2,19 +2,22 @@ import React, { useState } from 'react';
 import {Card, CardBody, Container, Form, FormGroup, Input, Label} from 'reactstrap';
 import { AvForm, AvField, AvInput } from 'availity-reactstrap-validation';
 import DateTimePicker from 'react-datetime-picker';
-import { createHackathon } from '../../actions/index';
-import { useDispatch } from 'react-redux';
+import { createHackathon, createHackathonAndFetchHackathons } from '../../actions/index';
+import { useDispatch, useSelector } from 'react-redux';
 import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
 import { Loader } from 'semantic-ui-react';
+import { Redirect } from 'react-router';
+import ModalCommon from '../ModalCommon';
 
 function CreateHackathonForm(props) {
     const [end_date, changeEndDate] = useState(new Date());
     const [start_date, changeStartDate] = useState(new Date());
     const [hackathonData, setHackathonData] = useState({})
+    const error = useSelector(state => state.error);
     const dispatch = useDispatch()
     const { user } = useAuth0();
     const [checked, setChecked] = useState(false)
-
+    const redirectTo = useSelector(state => state.redirectTo)
 
     const fields = [
         { 
@@ -50,10 +53,9 @@ function CreateHackathonForm(props) {
             ...hackathonData,
             [e.target.id]: e.target.value
         })
-        console.log(hackathonData)
     }
 
-    function handleValidSubmit(e) {
+    async function handleValidSubmit(e) {
         e.persist();
         const creatorId = user.sub.replace("auth0|", "")
         const body = {
@@ -62,26 +64,33 @@ function CreateHackathonForm(props) {
              end_date: end_date,
              is_open: checked
             }
-        console.log(body)
-       dispatch(createHackathon(creatorId, body))
+        // will dispatch a series of actions that will redirect if no error
+        dispatch(createHackathon(creatorId, body, '/dashboard'))
     }
 
-    function handleInvalidSubmit(e) {
-       
+    if (redirectTo) {
+        console.log(redirectTo)
+        return <Redirect to={redirectTo} />
     }
+
     
     return (
         <Container>
-            <h1>Create Hackathon</h1>
-        <AvForm onSubmit={handleValidSubmit} onInvalidSubmit={handleInvalidSubmit}>
-            <div className="col">
+            {error && (
+                <ModalCommon 
+                modalBody={error.request.statusText}
+                modalTitle="Error"
+                />
+            )}
+            <h1>Let's Create a Hackathon</h1>
+        <AvForm onSubmit={handleValidSubmit}>
                 <Card>
                 <CardBody>
             <FormGroup>
             {fields.map(field => (
                 <div className="form-group mb-2">
                 {(field.type) === "checkbox" ? (
-                    <div className="form-check pl-0">
+                    <div className="form-check">
                         <Label check>
                         <AvInput onChange={() => setChecked(!checked)}
                         type={field.type} trueValue={true} 
@@ -124,7 +133,6 @@ function CreateHackathonForm(props) {
             </FormGroup>
             </CardBody>
             </Card>
-            </div>
         </AvForm>
         </Container>
     );

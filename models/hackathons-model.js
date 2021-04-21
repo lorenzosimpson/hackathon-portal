@@ -4,7 +4,8 @@ module.exports = {
     findById,
     insert,
     updateHackathon,
-    remove
+    remove,
+    findByOrganizerId
 }
 
 async function find() {
@@ -15,6 +16,10 @@ async function findById(id) {
     const hack = await db('hackathons').where({ id }).first()
     if (hack) return hack
     return -1
+}
+
+async function findByOrganizerId(organizer_id) {
+    return db('hackathons').where({ organizer_id })
 }
 
 async function insert(hackathon) {

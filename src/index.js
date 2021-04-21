@@ -10,6 +10,7 @@ import { applyMiddleware, createStore } from 'redux';
 import { initialState, rootReducer } from "./reducers";
 import thunk from 'redux-thunk';
 import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
 
 
 const onRedirectCallback = (appState) => {
@@ -35,7 +36,9 @@ const store = createStore(rootReducer, initialState, applyMiddleware(thunk));
 ReactDOM.render(
   <Auth0Provider {...providerConfig}>
     <Provider store={store}>
+      <BrowserRouter history={history}>
     <App />
+    </BrowserRouter>
     </Provider>
   </Auth0Provider>,
   document.getElementById("root")
