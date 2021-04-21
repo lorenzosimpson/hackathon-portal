@@ -15,35 +15,28 @@ export const fetchHackathons = () => async dispatch => {
     dispatch({ type: FETCH_START });
     return (await axiosWithAuth())
     .get("http://localhost:3001/api/hackathons")
-    .then(
-        response => dispatch({ type: FETCH_HACKATHONS_SUCCESS, payload: response.data }),
-        error => {
+    .then(response => dispatch({ type: FETCH_HACKATHONS_SUCCESS, payload: response.data }))
+    .catch(error => {
           dispatch({ type: FETCH_FAILURE, payload: error.response })
-          throw error
-        }
-      )
+          console.log('error in fetch')
+          throw new Error('error in fetch')
+    })
 }
 
-export const createHackathon = (creatorId, hackathonData) => async dispatch => {
+export const createHackathon = (creatorId, hackathonData, path) => async dispatch => {
     console.log(hackathonData)
     dispatch({ type: POST_START });
     (await axiosWithAuth())
     .post(`/hackathons/u/${creatorId}`, hackathonData)
-    .then(response => dispatch({ type: POST_SUCCESS, payload: response.data }))
-    .catch(error => {
-          dispatch({ type: FETCH_FAILURE, payload: error.response })
-          throw error
+    .then(response => {
+        dispatch({ type: POST_SUCCESS, payload: response.data })
+        dispatch(fetchHackathons()).then(() => dispatch(redirectTo(path)))
+        .then(() => dispatch({ type: REDIRECT_COMPLETE}))
         })
-    }
-
-export const createHackathonAndFetchHackathons = (creatorId, hackathonData, link) => async dispatch => {
-    return dispatch(createHackathon(creatorId, hackathonData))
-    .then(() => {
-        return dispatch(fetchHackathons())
-        .then(() => dispatch(redirect(link)))
-    })
-    .catch(err =>  {
-        throw err
+    .catch(error => {
+        dispatch({ type: FETCH_FAILURE, payload: error.response })
+        console.log('error in create')
+        throw new Error('error in create')
     })
 }
 
@@ -51,12 +44,3 @@ export const redirectTo = link => async dispatch => {
     dispatch({ type: REDIRECT_TO, payload: link })
 };
 
-export const redirectComplete = () => async dispatch => {
-    dispatch({ type: REDIRECT_COMPLETE })
-}
-
-export const redirect = (link) => async dispatch => {
-    return dispatch(redirectTo(link)).then(() => {
-        return dispatch(redirectComplete())
-    })
-}

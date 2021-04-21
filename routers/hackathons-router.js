@@ -83,30 +83,30 @@ router.get('/:id', async (req, res) => {
 });
 
 //organizer creates a hackathon
-// router.post('/u/:id', async (req, res) => {
-//    const hackathon = req.body;
-//    const { id } = req.params;
-//    const validateCreation = validateHackathon(hackathon);
-//    hackathon.organizer_id = id;
+router.post('/u/:id', async (req, res) => {
+   const hackathon = req.body;
+   const { id } = req.params;
+   const validateCreation = validateHackathon(hackathon);
+   hackathon.organizer_id = id;
 
-//    if (validateCreation.isSuccessful === true) {
-//       const added = await hackathonDb.insert(hackathon);
-//       const new_hackathon = await hackathonDb.findById(added.id);
-//       const hackathon_id = new_hackathon.id;
-//       const new_instance = {
-//          user_id: id,
-//          hackathon_id: hackathon_id,
-//          user_hackathon_role: 'organizer'
-//       };
-//       userHackathon.insertHackathonInstance(new_instance);
-//       res.status(201).json(added);
-//    } else {
-//       res.status(500).json({
-//          message: 'Could not add hackathon',
-//          errors: validateCreation.errors
-//       });
-//    }
-// });
+   if (validateCreation.isSuccessful === true) {
+      const added = await hackathonDb.insert(hackathon);
+      const new_hackathon = await hackathonDb.findById(added.id);
+      const hackathon_id = new_hackathon.id;
+      const new_instance = {
+         user_id: id,
+         hackathon_id: hackathon_id,
+         user_hackathon_role: 'organizer'
+      };
+      userHackathon.insertHackathonInstance(new_instance);
+      res.status(201).json(added);
+   } else {
+      res.status(500).json({
+         message: 'Could not add hackathon',
+         errors: validateCreation.errors
+      });
+   }
+});
 
 // update hackathon information
 router.put('/:id/u/:org_id', async (req, res) => {

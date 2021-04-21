@@ -64,12 +64,16 @@ function CreateHackathonForm(props) {
              is_open: checked
             }
         // will dispatch a series of actions that will redirect if no error
-        dispatch(createHackathonAndFetchHackathons(creatorId, body, '/dashboard'))
+        dispatch(createHackathon(creatorId, body, '/dashboard'))
     }
 
     if (redirectTo) {
         console.log(redirectTo)
         return <Redirect to={redirectTo} />
+    }
+
+    if (error) {
+       return <div>{error.request.statusText}</div>
     }
     
     return (
