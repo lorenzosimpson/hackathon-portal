@@ -84,13 +84,13 @@ const Dashboard = () => {
                                 <li className="nav-item">
                                     <a className="nav-link active" href="#">
                                         <span data-feather="home"></span>
-              Dashboard <span className="sr-only">(current)</span>
+              Your Hackathons <span className="sr-only">(current)</span>
                                     </a>
                                 </li>
                                 <li className="nav-item">
                                     <a className="nav-link" href="#">
                                         <span data-feather="file"></span>
-              Orders
+              All Hackathons
             </a>
                                 </li>
                                 <li className="nav-item">

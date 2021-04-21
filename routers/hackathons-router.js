@@ -6,6 +6,7 @@ const { validateHackathon } = require('./hackathon-helpers');
 const projectDb = require('../models/project-model');
 const checkUserHackathon = require('../Api/middleware/check-user-hackathon');
 
+
 // get list of all hackathons
 router.get('/', async (req, res) => {
    try {
@@ -15,6 +16,16 @@ router.get('/', async (req, res) => {
       res.status(500).json({ error: 'Could not get hackathons' });
    }
 });
+
+router.get('/organizer/:id', async(req, res) => {
+   const { id } = req.params;
+   try {
+      const hackathonsByOrganizerId = await hackathonDb.findByOrganizerId(id)
+      res.status(200).json(hackathonsByOrganizerId)
+   } catch(err) {
+      console.log(err)
+   }
+})
 
 // get list of specific hackathon - members and admins
 router.get('/:id', async (req, res) => {
@@ -71,31 +82,31 @@ router.get('/:id', async (req, res) => {
    }
 });
 
-// organizer creates a hackathon
-router.post('/u/:id', async (req, res) => {
-   const hackathon = req.body;
-   const { id } = req.params;
-   const validateCreation = validateHackathon(hackathon);
-   hackathon.organizer_id = id;
+//organizer creates a hackathon
+// router.post('/u/:id', async (req, res) => {
+//    const hackathon = req.body;
+//    const { id } = req.params;
+//    const validateCreation = validateHackathon(hackathon);
+//    hackathon.organizer_id = id;
 
-   if (validateCreation.isSuccessful === true) {
-      const added = await hackathonDb.insert(hackathon);
-      const new_hackathon = await hackathonDb.findById(added.id);
-      const hackathon_id = new_hackathon.id;
-      const new_instance = {
-         user_id: id,
-         hackathon_id: hackathon_id,
-         user_hackathon_role: 'organizer'
-      };
-      userHackathon.insertHackathonInstance(new_instance);
-      res.status(201).json(added);
-   } else {
-      res.status(500).json({
-         message: 'Could not add hackathon',
-         errors: validateCreation.errors
-      });
-   }
-});
+//    if (validateCreation.isSuccessful === true) {
+//       const added = await hackathonDb.insert(hackathon);
+//       const new_hackathon = await hackathonDb.findById(added.id);
+//       const hackathon_id = new_hackathon.id;
+//       const new_instance = {
+//          user_id: id,
+//          hackathon_id: hackathon_id,
+//          user_hackathon_role: 'organizer'
+//       };
+//       userHackathon.insertHackathonInstance(new_instance);
+//       res.status(201).json(added);
+//    } else {
+//       res.status(500).json({
+//          message: 'Could not add hackathon',
+//          errors: validateCreation.errors
+//       });
+//    }
+// });
 
 // update hackathon information
 router.put('/:id/u/:org_id', async (req, res) => {

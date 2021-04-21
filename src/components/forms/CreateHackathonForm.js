@@ -3,18 +3,20 @@ import {Card, CardBody, Container, Form, FormGroup, Input, Label} from 'reactstr
 import { AvForm, AvField, AvInput } from 'availity-reactstrap-validation';
 import DateTimePicker from 'react-datetime-picker';
 import { createHackathon, createHackathonAndFetchHackathons } from '../../actions/index';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
 import { Loader } from 'semantic-ui-react';
+import { Redirect } from 'react-router';
 
 function CreateHackathonForm(props) {
     const [end_date, changeEndDate] = useState(new Date());
     const [start_date, changeStartDate] = useState(new Date());
     const [hackathonData, setHackathonData] = useState({})
+    const error = useSelector(state => state.error);
     const dispatch = useDispatch()
     const { user } = useAuth0();
     const [checked, setChecked] = useState(false)
-
+    const redirectTo = useSelector(state => state.redirectTo)
 
     const fields = [
         { 
@@ -50,10 +52,9 @@ function CreateHackathonForm(props) {
             ...hackathonData,
             [e.target.id]: e.target.value
         })
-        console.log(hackathonData)
     }
 
-    function handleValidSubmit(e) {
+    async function handleValidSubmit(e) {
         e.persist();
         const creatorId = user.sub.replace("auth0|", "")
         const body = {
@@ -62,19 +63,19 @@ function CreateHackathonForm(props) {
              end_date: end_date,
              is_open: checked
             }
-        console.log(body)
-       dispatch(createHackathonAndFetchHackathons(creatorId, body))
-       props.history.push('/dashboard');
+        // will dispatch a series of actions that will redirect if no error
+        dispatch(createHackathonAndFetchHackathons(creatorId, body, '/dashboard'))
     }
 
-    function handleInvalidSubmit(e) {
-       
+    if (redirectTo) {
+        console.log(redirectTo)
+        return <Redirect to={redirectTo} />
     }
     
     return (
         <Container>
-            <h1>Create Hackathon</h1>
-        <AvForm onSubmit={handleValidSubmit} onInvalidSubmit={handleInvalidSubmit}>
+            <h1>Let's Create a Hackathon</h1>
+        <AvForm onSubmit={handleValidSubmit}>
             <div className="col">
                 <Card>
                 <CardBody>
