@@ -80,7 +80,7 @@ const App = (props) => {
       <NavBar />
       <Container className="flex-grow-1 mt-5">
         <Switch>
-          <Route exact path='/dashboard'component={(props) => <Dashboard />}/>
+          <Route exact path='/dashboard'component={(props) => <Dashboard  {...props} />}/>
           <Route exact path="/"  component={Home} />
           <Route exact path="/profile"   component={Profile} />
           <Route exact path="/external-api" component={ExternalApi} />
