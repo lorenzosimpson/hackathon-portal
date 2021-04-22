@@ -1,5 +1,6 @@
 import moment from 'moment';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { formatDate } from './Dashboard';
 
 function Table(props) {
@@ -18,7 +19,10 @@ function Table(props) {
                        {keys.map(property => (
                            (property.includes('date')) ? (
                             <td>{formatDate(hackathon[property])}</td>
-                           ) :
+                           )
+                           : (property.includes('name')) ?
+                           (<td><Link to={`/dashboard/view/${hackathon['id']}`}>{hackathon[property]}</Link></td>)
+                            : 
                         (<td>{hackathon[property]}</td>)
                        ))}
                     </tr>

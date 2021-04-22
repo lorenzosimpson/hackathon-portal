@@ -22,6 +22,7 @@ import "./dashboard.css";
 import initFontAwesome from "./utils/initFontAwesome";
 import Dashboard from "./components/Dashboard";
 import CreateHackathonForm from "./components/forms/CreateHackathonForm";
+import HackathonDetail from "./components/HackathonDetail";
 
 initFontAwesome();
 
@@ -80,7 +81,8 @@ const App = (props) => {
       <NavBar />
       <Container className="flex-grow-1 mt-5">
         <Switch>
-          <Route exact path='/dashboard'component={(props) => <Dashboard  {...props} />}/>
+          <Route exact path='/dashboard' component={(props) => <Dashboard  {...props} />}/>
+          <Route exact path="/dashboard/view/:id" component={(props) => <HackathonDetail {...props} />}/>
           <Route exact path="/"  component={Home} />
           <Route exact path="/profile"   component={Profile} />
           <Route exact path="/external-api" component={ExternalApi} />

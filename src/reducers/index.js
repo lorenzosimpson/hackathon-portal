@@ -33,7 +33,10 @@ export const rootReducer = (state, action) => {
             console.log(action.payload)
             return {
                 ...state,
-                hackathons: [...action.payload],
+                hackathons: {
+                    ...state.hackathons,
+                    all: [...action.payload]
+                },
                 isFetching: false,
             }
         case FETCH_FAILURE:
@@ -59,7 +62,10 @@ export const rootReducer = (state, action) => {
         case HACKATHONS_SORTED:
             return {
                 ...state,
-                hackathons: {...action.payload}
+                hackathons: {
+                    ...state.hackathons,
+                    ...action.payload
+                }
             }
         default:
             return state

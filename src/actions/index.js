@@ -20,7 +20,7 @@ export const fetchHackathons = () => async dispatch => {
     return (await axiosWithAuth())
     .get("http://localhost:3001/api/hackathons")
     .then(response => {
-        console.log(response.data)
+        dispatch({type: FETCH_HACKATHONS_SUCCESS, payload: response.data })
         dispatch(moveHackathonsToCorrectTable(response.data))
     })
     .catch(error => {

@@ -57,11 +57,11 @@ const NavBar = () => {
                 <NavItem>
                   <NavLink
                     tag={RouterNavLink}
-                    to="/external-api"
+                    to="/dashboard"
                     exact
                     activeClassName="router-link-exact-active"
                   >
-                    External API
+                    Dashboard
                   </NavLink>
                 </NavItem>
               )}
@@ -103,14 +103,7 @@ const NavBar = () => {
                       <FontAwesomeIcon icon="user" className="mr-3" /> Profile
                     </DropdownItem>
 
-                    <DropdownItem
-                      tag={RouterNavLink}
-                      to="/dashboard"
-                      className="dropdown-profile"
-                      activeClassName="router-link-exact-active"
-                    >
-                      <FontAwesomeIcon icon="chart-line" className="mr-3" /> Dashboard
-                    </DropdownItem>
+                   
 
 
                     <DropdownItem
