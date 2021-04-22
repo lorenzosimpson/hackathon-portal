@@ -36,9 +36,7 @@ const store = createStore(rootReducer, initialState, applyMiddleware(thunk));
 ReactDOM.render(
   <Auth0Provider {...providerConfig}>
     <Provider store={store}>
-      <BrowserRouter history={history}>
-    <App />
-    </BrowserRouter>
+        <App />
     </Provider>
   </Auth0Provider>,
   document.getElementById("root")

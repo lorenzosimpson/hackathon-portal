@@ -3,7 +3,7 @@ import React from 'react';
 function OldSidebar(props) {
     return (
         <nav id="sidebarMenu" className="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse">
-        <div className="sidebar-sticky pt-3">
+        <div className="sidebar-sticky pt-5">
             <ul className="nav pl-2 flex-column">
                 <li className="nav-item">
                     <a className="nav-link active" href="#">

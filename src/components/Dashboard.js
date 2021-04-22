@@ -1,30 +1,25 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import moment from 'moment';
-import { fetchHackathons } from '../actions/index';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Loader } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { withAuthenticationRequired } from '@auth0/auth0-react';
-import Sidebar from './nav/Sidebar';
 import OldSidebar from './nav/OldSidebar';
-import SmallSidebar from './nav/SmallSidebar'
-const Dashboard = () => {
+
+const Dashboard = (props) => {
     const hackathons = useSelector(state => state.hackathons);
-    const dispatch = useDispatch();
     const [filteredHackathons, setFilteredHackathons] = useState({
         current: [],
         past: [],
         future: []
     })
-     
-    useEffect(() => { 
-        dispatch(fetchHackathons())
-    }, [])
 
-    useEffect(() => moveHackathonsToCorrectTable(hackathons), [hackathons])
+    useEffect(() => {
+        moveHackathonsToCorrectTable(hackathons);
+    }, [hackathons]);
 
-   
+
     const isLoading = useSelector(state => state.isLoading)
     const currentDate = new Date();
 

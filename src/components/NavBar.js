@@ -37,8 +37,8 @@ const NavBar = () => {
 
   return (
     <div className="nav-container mb-5">
-      <Navbar color="light" light expand="md" >
-        <Container>
+        <Navbar color="light" light expand="md" >
+        <div className="container-fluid">
           <NavbarBrand className="logo" />
           <NavbarToggler onClick={toggle} />
           <Collapse isOpen={isOpen} navbar>
@@ -66,8 +66,10 @@ const NavBar = () => {
                 </NavItem>
               )}
             </Nav>
+            
             <Nav className="d-none d-md-block" navbar>
               {!isAuthenticated && (
+               
                 <NavItem>
                   <Button
                     id="qsLoginBtn"
@@ -75,9 +77,10 @@ const NavBar = () => {
                     className="btn-margin"
                     onClick={() => loginWithRedirect()}
                   >
-                    Log in
+                    Get Started
                   </Button>
                 </NavItem>
+
               )}
               {isAuthenticated && (
                 <UncontrolledDropdown nav inNavbar>
@@ -183,7 +186,7 @@ const NavBar = () => {
               </Nav>
             )}
           </Collapse>
-        </Container>
+        </div>
       </Navbar>
     </div>
   );

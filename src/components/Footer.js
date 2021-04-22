@@ -5,9 +5,6 @@ const Footer = () => (
     <div className="d-flex justify-content-center align-items-center footer-inner">
       <div>
     <div className="logo" />
-    <p>
-      Hackathon Portal
-    </p>
     </div>
     </div>
   </footer>
