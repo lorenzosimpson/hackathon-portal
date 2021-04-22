@@ -5,9 +5,9 @@ import {DateTimePicker} from 'react-rainbow-components';
 import { createHackathon } from '../../actions/index';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
-import { Loader } from 'semantic-ui-react';
 import { Redirect } from 'react-router';
 import ModalCommon from '../ModalCommon';
+import Loading from '../Loading';
 
 function CreateHackathonForm(props) {
     const [end_date, changeEndDate] = useState(new Date());
@@ -139,5 +139,5 @@ function CreateHackathonForm(props) {
 }
 
 export default withAuthenticationRequired(CreateHackathonForm, {
-    onRedirecting: () => <Loader />,
+    onRedirecting: () => <Loading />,
   });

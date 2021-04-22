@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
-import { Loader } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { withAuthenticationRequired } from '@auth0/auth0-react';
 import OldSidebar from './nav/OldSidebar';
 import Table from './Table';
+import Loading from './Loading';
 
 export const formatDate = date => {
     const months = [
@@ -36,7 +36,7 @@ const Dashboard = (props) => {
     const isLoading = useSelector(state => state.isLoading)
 
     if (!current || !past || !future || isLoading) {
-        return <Loader />
+        return <Loading />
     }
 
     return (
@@ -99,5 +99,5 @@ const Dashboard = (props) => {
     )
 }
 export default withAuthenticationRequired(Dashboard, {
-    onRedirecting: () => <Loader />,
+    onRedirecting: () => <Loading />,
 });
