@@ -1,5 +1,5 @@
-import React, { Fragment, useEffect } from "react";
-import { Router, Route, Switch } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Route, Switch, withRouter } from "react-router-dom";
 import { Container } from "reactstrap";
 
 import Loading from "./components/Loading";
@@ -9,10 +9,9 @@ import Home from "./views/Home";
 import Profile from "./views/Profile";
 import ExternalApi from "./views/ExternalApi";
 import { useAuth0 } from "@auth0/auth0-react";
-import history from "./utils/history";
 import {getConfig} from './config';
 import axios from 'axios';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { fetchHackathons } from './actions/index';
 
 // styles
@@ -21,13 +20,12 @@ import "./dashboard.css";
 
 // fontawesome
 import initFontAwesome from "./utils/initFontAwesome";
-import HackathonList from "./components/HackathonList";
 import Dashboard from "./components/Dashboard";
 import CreateHackathonForm from "./components/forms/CreateHackathonForm";
 
 initFontAwesome();
 
-const App = () => {
+const App = (props) => {
   const { isLoading, error, user, isAuthenticated, getAccessTokenSilently } = useAuth0();
   const { apiOrigin = "http://localhost:3001", audience } = getConfig();
   const dispatch = useDispatch()
@@ -72,10 +70,12 @@ const App = () => {
     return <Loading />;
   }
 
+  const exclusionArray = [
+    '/dashboard',
+  ]
   
 
   return (
-    <Router history={history}>
     <div id="app" className="d-flex flex-column h-100">
       <NavBar />
       <Container className="flex-grow-1 mt-5">
@@ -87,10 +87,9 @@ const App = () => {
           <Route exact path='/new' render={(props) => (<CreateHackathonForm {...props}  />)} />
         </Switch>
       </Container>
-      <Footer />
+      {exclusionArray.indexOf(props.location.pathname) < 0 && <Footer/>}
     </div>
-  </Router>
   );
 };
 
-export default App;
+export default withRouter(App);

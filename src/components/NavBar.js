@@ -38,7 +38,7 @@ const NavBar = () => {
   return (
     <div className="nav-container mb-5">
         <Navbar color="light" light expand="md" >
-        <div className="container-fluid">
+          <Container>
           <NavbarBrand className="logo" />
           <NavbarToggler onClick={toggle} />
           <Collapse isOpen={isOpen} navbar>
@@ -186,7 +186,8 @@ const NavBar = () => {
               </Nav>
             )}
           </Collapse>
-        </div>
+      
+        </Container>
       </Navbar>
     </div>
   );

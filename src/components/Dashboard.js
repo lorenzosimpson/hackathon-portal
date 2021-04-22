@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import axios from 'axios';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
 import { Loader } from 'semantic-ui-react';
@@ -9,44 +8,8 @@ import OldSidebar from './nav/OldSidebar';
 
 const Dashboard = (props) => {
     const hackathons = useSelector(state => state.hackathons);
-    const [filteredHackathons, setFilteredHackathons] = useState({
-        current: [],
-        past: [],
-        future: []
-    })
-
-    useEffect(() => {
-        moveHackathonsToCorrectTable(hackathons);
-    }, [hackathons]);
-
-
     const isLoading = useSelector(state => state.isLoading)
-    const currentDate = new Date();
 
-    const moveHackathonsToCorrectTable = hackathonsArr => {
-        var currentArr = []
-        var pastArr = []
-        var futureArr = []
-        hackathonsArr.map(hackathon => {
-            if (moment(hackathon.start_date).isBefore(currentDate) && (
-            moment(hackathon.end_date).isAfter(currentDate) ||
-            moment(hackathon.start_date).isSame(currentDate) ||
-            moment(hackathon.end_date).isSame(currentDate))){
-                currentArr.push(hackathon)
-            }
-            if (moment(hackathon.start_date).isAfter(currentDate)) {
-                futureArr.push(hackathon)
-            }
-            if (moment(hackathon.end_date).isBefore(currentDate)) {
-                pastArr.push(hackathon)
-            }
-        })
-        setFilteredHackathons({
-            current: currentArr,
-            future: futureArr,
-            past: pastArr
-        })
-    }
 
     
     const formatDate = date => {
@@ -72,7 +35,7 @@ const Dashboard = (props) => {
     };
   
 
-     if (!hackathons.length || isLoading) {
+     if (!hackathons || isLoading) {
          return <Loader />
      }
     return (
@@ -106,7 +69,7 @@ const Dashboard = (props) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {filteredHackathons.current.map(hackathon => (
+                            {hackathons.current.map(hackathon => (
                                 <tr key={hackathon.id}>
                                 <td>{hackathon.id}</td>
                                 <td>{formatDate(hackathon.start_date)}</td>
@@ -134,7 +97,7 @@ const Dashboard = (props) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {filteredHackathons.future.map(hackathon => (
+                            {hackathons.future.map(hackathon => (
                                 <tr key={hackathon.id}>
                                 <td>{hackathon.id}</td>
                                 <td>{formatDate(hackathon.start_date)}</td>
@@ -162,7 +125,7 @@ const Dashboard = (props) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {filteredHackathons.past.map(hackathon => (
+                            {hackathons.past.map(hackathon => (
                                     <tr key={hackathon.id}>
                                 <td>{hackathon.id}</td>
                                 <td>{formatDate(hackathon.start_date)}</td>

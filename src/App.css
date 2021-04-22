@@ -96,6 +96,7 @@ h2 {
 
 .btn-primary {
   background: -webkit-linear-gradient(#47abfc, #356ad2);
-  padding: 0.7rem;
+  padding: 0.6rem;
   border-radius: 7px;
+  border: none;
 }

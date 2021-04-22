@@ -1,4 +1,5 @@
 import { axiosWithAuth } from '../axiosWithAuth/axiosWithAuth';
+import moment from 'moment';
 
 export const FETCH_HACKATHONS_SUCCESS = "FETCH_HACKATHONS_SUCCESS";
 export const FETCH_START = "FETCH_START";
@@ -10,12 +11,18 @@ export const POST_SUCCESS = "POST_SUCCESS";
 export const REDIRECT_TO = "REDIRECT_TO";
 export const REDIRECT_COMPLETE = "REDIRECT_COMPLETE";
 
+export const HACKATHONS_SORTED = "HACKATHONS_SORTED";
+
+
 
 export const fetchHackathons = () => async dispatch => {
     dispatch({ type: FETCH_START });
     return (await axiosWithAuth())
     .get("http://localhost:3001/api/hackathons")
-    .then(response => dispatch({ type: FETCH_HACKATHONS_SUCCESS, payload: response.data }))
+    .then(response => {
+        console.log(response.data)
+        dispatch(moveHackathonsToCorrectTable(response.data))
+    })
     .catch(error => {
           dispatch({ type: FETCH_FAILURE, payload: error.response })
           console.log('error in fetch')
@@ -43,4 +50,32 @@ export const createHackathon = (creatorId, hackathonData, path) => async dispatc
 export const redirectTo = link => async dispatch => {
     dispatch({ type: REDIRECT_TO, payload: link })
 };
+
+export const moveHackathonsToCorrectTable = hackathonsArr => dispatch => {
+    const currentDate = moment();
+    var currentArr = []
+    var pastArr = []
+    var futureArr = []
+    hackathonsArr.map(hackathon => {
+        if (moment(hackathon.start_date).isBefore(currentDate) && (
+        moment(hackathon.end_date).isAfter(currentDate) ||
+        moment(hackathon.start_date).isSame(currentDate) ||
+        moment(hackathon.end_date).isSame(currentDate))){
+            currentArr.push(hackathon)
+        }
+        if (moment(hackathon.start_date).isAfter(currentDate)) {
+            futureArr.push(hackathon)
+        }
+        if (moment(hackathon.end_date).isBefore(currentDate)) {
+            pastArr.push(hackathon)
+        }
+    })
+    const result = {
+        current: currentArr,
+        future: futureArr,
+        past: pastArr
+    }
+    dispatch({type: HACKATHONS_SORTED, payload: result })
+}
+
 
