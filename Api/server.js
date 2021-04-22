@@ -4,7 +4,6 @@ const cors = require('cors');
 const apiRouter = require('../routers/api-router')
 var jwt = require('express-jwt');
 var jwks = require('jwks-rsa');
-//const authConfig = require("../src/auth_config.json");
 const axios = require('axios');
 
 const clientOrigin = process.env.CLIENT_ORIGIN;
