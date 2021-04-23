@@ -4,9 +4,9 @@ const port = process.env.SERVER_PORT;
 const path = require('path')
 const express = require('express')
 
-// server.use(express.static(path.join(__dirname, 'build')));
-// server.get('*', (req,res) =>{
-//     res.sendFile(path.join(__dirname+ '/build/index.html'));
-//  });
+server.use(express.static(path.join(__dirname, 'build')));
+server.get('*', (req,res) =>{
+    res.sendFile(path.join(__dirname+ '/build/index.html'));
+ });
  
 server.listen(port, () => console.log(`Server running on port ${port}!`));

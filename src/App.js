@@ -41,9 +41,9 @@ const App = (props) => {
     const putUser = async () => {
       try {
         const token = await getAccessTokenSilently();
-        console.log(token)
         const id = user.sub;
-        const res = await axios.put(`http://localhost:3001/api/users/${id}`, {
+        const url = process.env.REACT_APP_SERVER_URL
+        const res = await axios.put(`${url}/api/users/${id}`, {
           username: user.nickname,
           email: user.email
         },{

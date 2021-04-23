@@ -36,7 +36,7 @@ const NavBar = () => {
     });
 
   return (
-    <div className="nav-container mb-5">
+    <div className="nav-container">
         <Navbar color="light" light expand="md" >
           <Container>
           <NavbarBrand className="logo" />

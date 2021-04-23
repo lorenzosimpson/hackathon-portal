@@ -63,11 +63,10 @@ server.get('/token', async (req, res) => {
     })
        .then(response => {
            token = (response.data.access_token)
-           console.log(token)
            res.status(200).json({access_token: token})
        })
        .catch(err => {
-          res.status(500)
+          res.status(500).json("Could not get a token from the server /token endpoint")
           console.log(err)
        });
       
