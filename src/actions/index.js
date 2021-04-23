@@ -18,7 +18,7 @@ export const HACKATHONS_SORTED = "HACKATHONS_SORTED";
 export const fetchHackathons = () => async dispatch => {
     dispatch({ type: FETCH_START });
     return (await axiosWithAuth())
-    .get("http://localhost:3001/api/hackathons")
+    .get("/hackathons")
     .then(response => {
         dispatch({type: FETCH_HACKATHONS_SUCCESS, payload: response.data })
         dispatch(moveHackathonsToCorrectTable(response.data))

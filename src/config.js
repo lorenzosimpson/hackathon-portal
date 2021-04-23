@@ -8,7 +8,7 @@ export function getConfig() {
   // If this resolves to `null`, the API page changes to show some helpful info about what to do
   // with the audience.
   const audience =
-    configJson.audience && configJson.audience !== "HACKATHON_DB"
+    configJson.audience && configJson.audience !== "HACKATHON_DB_API"
       ? configJson.audience
       : null;
 

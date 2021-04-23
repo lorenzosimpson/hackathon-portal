@@ -28,40 +28,34 @@ initFontAwesome();
 
 const App = (props) => {
   const { isLoading, error, user, isAuthenticated, getAccessTokenSilently } = useAuth0();
-  const { apiOrigin = "http://localhost:3001", audience } = getConfig();
   const dispatch = useDispatch()
 
+    useEffect(() => {
+     dispatch(fetchHackathons());
+    }, [])
 
-    const fetch = () => {
-      dispatch(fetchHackathons())
-    }
-      useEffect(() => {
-        fetch()
-      }, [])
+    useEffect(() => {
+      putUser()
+    }, [user])
 
-
-  const putUser = async () => {
+    const putUser = async () => {
       try {
         const token = await getAccessTokenSilently();
-        const id = user.sub.replace("auth0|", "")
-        await axios.put(`${apiOrigin}/api/users/${id}`, {
-          email: user.email,
-          first_name: user.nickname
-        }, {
+        console.log(token)
+        const id = user.sub;
+        const res = await axios.put(`http://localhost:3001/api/users/${id}`, {
+          username: user.nickname,
+          email: user.email
+        },{
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`
           }
-        })
-      } catch (err) {
-        console.log(err)
-      }
-      ;
+        } )
+        console.log(res)
+    } catch(err) {
+      console.log(err)
     }
-  useEffect(() => {
-    if (isAuthenticated && user) {
-     putUser()
     }
-  },[user, isAuthenticated])
 
   if (error) {
     return <div>Oops... {error.message}</div>;

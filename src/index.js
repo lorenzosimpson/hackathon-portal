@@ -13,6 +13,7 @@ import { Provider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
 
 
+
 const onRedirectCallback = (appState) => {
   history.push(
     appState && appState.returnTo ? appState.returnTo : window.location.pathname
@@ -26,7 +27,7 @@ const config = getConfig();
 const providerConfig = {
   domain: config.domain,
   clientId: config.clientId,
-  ...(config.audience ? { audience: config.audience } : null),
+  audience: config.audience,
   redirectUri: window.location.origin,
   onRedirectCallback,
 };

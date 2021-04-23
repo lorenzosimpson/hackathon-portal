@@ -1,5 +1,5 @@
 import axios from 'axios';
-const baseURL = process.env.REACT_APP_SERVER_URL || 'http://localhost:3001'
+const baseURL = process.env.REACT_APP_SERVER_URL
 
 
 export const axiosWithAuth = async () => {
@@ -7,6 +7,7 @@ export const axiosWithAuth = async () => {
     try {
         let response = (await axios.get(`${baseURL}/token`))
         token = response.data.access_token;
+        console.log('TOKEN FROM AXIOSWITHAUTH', token)
     } catch(err) {
         console.log('Error getting token', err)
     }
