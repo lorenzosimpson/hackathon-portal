@@ -69,7 +69,6 @@ function CreateHackathonForm(props) {
     }
 
     if (redirectTo) {
-        console.log(redirectTo)
         return <Redirect to={redirectTo} />
     }
 
