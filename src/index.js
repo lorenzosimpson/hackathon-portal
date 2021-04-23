@@ -30,6 +30,7 @@ const providerConfig = {
   audience: config.audience,
   redirectUri: window.location.origin,
   onRedirectCallback,
+  cacheLocation: 'localstorage'
 };
 
 const store = createStore(rootReducer, initialState, applyMiddleware(thunk));
