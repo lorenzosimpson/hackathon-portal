@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": false,
   "scripts": {
-    "start": "serve -s build",
+    "start": "node index.js",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jest-environment-jsdom-sixteen",
     "eject": "react-scripts eject",
@@ -11,8 +11,7 @@
     "server": "node index.js",
     "server:dev": "nodemon index.js",
     "dev": "npm-run-all --parallel spa server:dev",
-    "prod": "npm-run-all --parallel server",
-    "heroku-postbuild": "npm run build"
+    "prod": "npm-run-all --parallel server"
 
   },
   "dependencies": {
