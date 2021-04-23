@@ -27,12 +27,12 @@ import HackathonDetail from "./components/HackathonDetail";
 initFontAwesome();
 
 const App = (props) => {
-  const { isLoading, error, user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+  const { isLoading, error, user, getAccessTokenSilently } = useAuth0();
   const dispatch = useDispatch()
 
     useEffect(() => {
      dispatch(fetchHackathons());
-    }, [])
+    }, [user])
 
     useEffect(() => {
       putUser()
@@ -78,14 +78,13 @@ const App = (props) => {
           <Route exact path='/dashboard' component={(props) => <Dashboard  {...props} />}/>
           <Route exact path="/dashboard/view/:id" component={(props) => <HackathonDetail {...props} />}/>
           <Route exact path="/"  component={Home} />
-          <Route exact path="/profile"   component={Profile} />
-          <Route exact path="/external-api" component={ExternalApi} />
+          <Route path="/profile"   component={(props) => <Profile {...props} />}/>
+          <Route path="/external-api" component={ExternalApi} />
           <Route exact path='/new' render={(props) => (<CreateHackathonForm {...props}  />)} />
         </Switch>
       </Container>
-      {exclusionArray.indexOf(props.location.pathname) < 0 && <Footer/>}
     </div>
   );
 };
 
-export default withRouter(App);
+export default App;

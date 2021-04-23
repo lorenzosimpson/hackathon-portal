@@ -5,8 +5,9 @@ import Highlight from "../components/Highlight";
 import Loading from "../components/Loading";
 import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
 
-export const ProfileComponent = () => {
+export const ProfileComponent = (props) => {
   const { user } = useAuth0();
+  console.log(props.history)
 
   return (
     <Container className="mb-5">

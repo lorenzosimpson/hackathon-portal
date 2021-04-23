@@ -39,6 +39,7 @@ router.put('/:id', async (req, res) => {
       if (user) {
          const updated = await userDb.updateUser(id, changes);
          delete updated.password
+         console.log('put user')
          res.status(200).json(updated);
       } else {
          console.log(id, user)

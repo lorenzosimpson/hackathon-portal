@@ -10,7 +10,7 @@ import { applyMiddleware, createStore } from 'redux';
 import { initialState, rootReducer } from "./reducers";
 import thunk from 'redux-thunk';
 import { Provider } from "react-redux";
-import { BrowserRouter as Router } from "react-router-dom";
+import { Router } from "react-router-dom";
 
 
 
@@ -40,7 +40,7 @@ ReactDOM.render(
     <Provider store={store}>
       <Router history={history}>
         <App />
-        </Router>
+      </Router>
     </Provider>
   </Auth0Provider>,
   document.getElementById("root")
