@@ -1,85 +1,44 @@
-import React, {useState, useEffect} from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
 import moment from 'moment';
-import { fetchHackathons } from '../actions/index';
-import { useDispatch, useSelector } from 'react-redux';
-import { Loader } from 'semantic-ui-react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { withAuthenticationRequired } from '@auth0/auth0-react';
-import Sidebar from './nav/Sidebar';
 import OldSidebar from './nav/OldSidebar';
-import SmallSidebar from './nav/SmallSidebar'
-const Dashboard = () => {
-    const hackathons = useSelector(state => state.hackathons);
-    const dispatch = useDispatch();
-    const [filteredHackathons, setFilteredHackathons] = useState({
-        current: [],
-        past: [],
-        future: []
-    })
-     
-    useEffect(() => { 
-        dispatch(fetchHackathons())
-    }, [])
+import Table from './Table';
+import Loading from './Loading';
 
-    useEffect(() => moveHackathonsToCorrectTable(hackathons), [hackathons])
+export const formatDate = date => {
+    const months = [
+        "01",
+        "02",
+        "03",
+        "04",
+        "05",
+        "06",
+        "07",
+        "08",
+        "09",
+        "10",
+        "11",
+        "12"
+    ];
+    const newDate = new Date(date);
+    const y = newDate.getFullYear().toString().substr(2);
+    const d = newDate.getDate();
+    const m = months[newDate.getMonth()];
+    return `${m}/${d}/${y}`;
+};
 
-   
+const Dashboard = (props) => {
+    const current = useSelector(state => state.hackathons.current);
+    const past = useSelector(state => state.hackathons.past);
+    const future = useSelector(state => state.hackathons.future)
     const isLoading = useSelector(state => state.isLoading)
-    const currentDate = new Date();
 
-    const moveHackathonsToCorrectTable = hackathonsArr => {
-        var currentArr = []
-        var pastArr = []
-        var futureArr = []
-        hackathonsArr.map(hackathon => {
-            if (moment(hackathon.start_date).isBefore(currentDate) && (
-            moment(hackathon.end_date).isAfter(currentDate) ||
-            moment(hackathon.start_date).isSame(currentDate) ||
-            moment(hackathon.end_date).isSame(currentDate))){
-                currentArr.push(hackathon)
-            }
-            if (moment(hackathon.start_date).isAfter(currentDate)) {
-                futureArr.push(hackathon)
-            }
-            if (moment(hackathon.end_date).isBefore(currentDate)) {
-                pastArr.push(hackathon)
-            }
-        })
-        setFilteredHackathons({
-            current: currentArr,
-            future: futureArr,
-            past: pastArr
-        })
+    if (!current || !past || !future || isLoading) {
+        return <Loading />
     }
 
-    
-    const formatDate = date => {
-        const months = [
-            "01",
-            "02",
-            "03",
-            "04",
-            "05",
-            "06",
-            "07",
-            "08",
-            "09",
-            "10",
-            "11",
-            "12"
-        ];
-        const newDate = new Date(date);
-        const y = newDate.getFullYear().toString().substr(2);
-        const d = newDate.getDate();
-        const m = months[newDate.getMonth()];
-        return `${m}/${d}/${y}`;
-    };
-  
-
-     if (!hackathons.length || isLoading) {
-         return <Loader />
-     }
     return (
         <div className="row">
             <OldSidebar />
@@ -87,11 +46,13 @@ const Dashboard = () => {
                 <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h3 className="h3">Dashboard</h3>
                     <div className="btn-toolbar mb-2 mb-md-0">
-                        <Link to="/new">
-                        <button type="button" className="btn btn-sm btn-primary">
-                            + Create Hackathon
+                            <button type="button" 
+                            className="btn btn-sm btn-primary"
+                            onClick={() => props.history.push('/new')}
+                            >
+                                + Create Hackathon
                         </button>
-                        </Link>
+                 
                     </div>
                 </div>
 
@@ -99,92 +60,44 @@ const Dashboard = () => {
 
                 <h2 className="h3">Current Hackathons</h2>
                 <div className="table-responsive mb-3">
-                    <table className="table table-striped table-sm">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Start Date</th>
-                                <th>End Date</th>
-                                <th>Name</th>
-                                <th>Location</th>
-                                <th>Open</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {filteredHackathons.current.map(hackathon => (
-                                <tr key={hackathon.id}>
-                                <td>{hackathon.id}</td>
-                                <td>{formatDate(hackathon.start_date)}</td>
-                                <td>{formatDate(hackathon.end_date)}</td>
-                                <td>{hackathon.name}</td>
-                                <td>{hackathon.location}</td>
-                                <td>{hackathon.is_open}</td>
-                            </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                    <Table classN={{ thead: 'thead-dark' }} body={current} headers={[
+                        '#',
+                        'Start Date',
+                        'End Date',
+                        'Name',
+                        'Location',
+                        'Open',
+                    ]} />
                 </div>
 
                 <h3 className="h4">Upcoming Hackathons</h3>
                 <div className="table-responsive mb-3">
-                    <table className="table table-striped table-sm">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Start Date</th>
-                                <th>End Date</th>
-                                <th>Name</th>
-                                <th>Location</th>
-                                <th>Open</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {filteredHackathons.future.map(hackathon => (
-                                <tr key={hackathon.id}>
-                                <td>{hackathon.id}</td>
-                                <td>{formatDate(hackathon.start_date)}</td>
-                                <td>{formatDate(hackathon.end_date)}</td>
-                                <td>{hackathon.name}</td>
-                                <td>{hackathon.location}</td>
-                                <td>{hackathon.is_open}</td>
-                            </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                    <Table classN={{ thead: 'thead-dark' }} body={future} headers={[
+                        '#',
+                        'Start Date',
+                        'End Date',
+                        'Name',
+                        'Location',
+                        'Open',
+                    ]} />
                 </div>
 
                 <h3 className="h4">Past Hackathons</h3>
                 <div className="table-responsive mb-3">
-                    <table className="table table-striped table-sm">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Start Date</th>
-                                <th>End Date</th>
-                                <th>Name</th>
-                                <th>Location</th>
-                                <th>Open</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {filteredHackathons.past.map(hackathon => (
-                                    <tr key={hackathon.id}>
-                                <td>{hackathon.id}</td>
-                                <td>{formatDate(hackathon.start_date)}</td>
-                                <td>{formatDate(hackathon.end_date)}</td>
-                                <td>{hackathon.name}</td>
-                                <td>{hackathon.location}</td>
-                                <td>{hackathon.is_open}</td>
-                            </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                    <Table classN={{ thead: 'thead-dark' }} body={past} headers={[
+                        '#',
+                        'Start Date',
+                        'End Date',
+                        'Name',
+                        'Location',
+                        'Open',
+                    ]} />
                 </div>
             </main>
-            </div>
-          
-  )
+        </div>
+
+    )
 }
 export default withAuthenticationRequired(Dashboard, {
-    onRedirecting: () => <Loader />,
-  });
+    onRedirecting: () => <Loading />,
+});

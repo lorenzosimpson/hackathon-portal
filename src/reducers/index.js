@@ -1,7 +1,7 @@
-import { FETCH_START, FETCH_HACKATHONS_SUCCESS, POST_SUCCESS, POST_START, FETCH_FAILURE, REDIRECT_TO, REDIRECT_COMPLETE } from "../actions"
+import { FETCH_START, FETCH_HACKATHONS_SUCCESS, POST_SUCCESS, POST_START, FETCH_FAILURE, REDIRECT_TO, REDIRECT_COMPLETE, HACKATHONS_SORTED } from "../actions"
 
 export const initialState = {
-    hackathons: [],
+    hackathons: {},
     isFetching: false,
     error: "",
     redirectTo: ""
@@ -33,7 +33,10 @@ export const rootReducer = (state, action) => {
             console.log(action.payload)
             return {
                 ...state,
-                hackathons: [...action.payload],
+                hackathons: {
+                    ...state.hackathons,
+                    all: [...action.payload]
+                },
                 isFetching: false,
             }
         case FETCH_FAILURE:
@@ -55,6 +58,14 @@ export const rootReducer = (state, action) => {
             return {
                 ...state,
                 redirectTo: ""
+            }
+        case HACKATHONS_SORTED:
+            return {
+                ...state,
+                hackathons: {
+                    ...state.hackathons,
+                    ...action.payload
+                }
             }
         default:
             return state

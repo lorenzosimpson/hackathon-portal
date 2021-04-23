@@ -58,6 +58,7 @@
 
 footer {
   z-index: 1000;
+  min-height: 80px;
 }
 footer .logo {
   margin-top: 10px !important;
@@ -69,4 +70,33 @@ h2 {
 
 .content-wrapper-bg {
   background-color: lightgray;
+}
+
+.fa {
+  font-size: 32px;
+  color: #4022e9;
+  display: block;
+  background: -webkit-linear-gradient(#47abfc, #356ad2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.icon {
+  background-color: #fff;
+  border: 1px solid #eee;
+  text-align: center;
+  width: 100px;
+  height: 100px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+  transition: all .2s;
+}
+
+.btn-primary {
+  background: -webkit-linear-gradient(#47abfc, #356ad2);
+  padding: 0.6rem;
+  border-radius: 7px;
+  border: none;
 }

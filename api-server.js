@@ -8,14 +8,13 @@ const authConfig = require("./src/auth_config.json");
 
 const app = express();
 
-const port = process.env.API_PORT || 3001;
-const appPort = process.env.SERVER_PORT || 3000;
-const appOrigin = authConfig.appOrigin || `http://localhost:${appPort}`;
+const port = process.env.API_PORT || 3000;
+//const appOrigin = process.env.CLIENT_ORIGIN;
 
 if (
   !authConfig.domain ||
   !authConfig.audience ||
-  authConfig.audience === "YOUR_API_IDENTIFIER"
+  authConfig.audience === "HACKATHON_DB_API"
 ) {
   console.log(
     "Exiting: Please make sure that auth_config.json is in place and populated with valid domain and audience values"

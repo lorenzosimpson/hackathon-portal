@@ -36,9 +36,9 @@ const NavBar = () => {
     });
 
   return (
-    <div className="nav-container mb-5">
-      <Navbar color="light" light expand="md" >
-        <Container>
+    <div className="nav-container">
+        <Navbar color="light" light expand="md" >
+          <Container>
           <NavbarBrand className="logo" />
           <NavbarToggler onClick={toggle} />
           <Collapse isOpen={isOpen} navbar>
@@ -57,17 +57,19 @@ const NavBar = () => {
                 <NavItem>
                   <NavLink
                     tag={RouterNavLink}
-                    to="/external-api"
+                    to="/dashboard"
                     exact
                     activeClassName="router-link-exact-active"
                   >
-                    External API
+                    Dashboard
                   </NavLink>
                 </NavItem>
               )}
             </Nav>
+            
             <Nav className="d-none d-md-block" navbar>
               {!isAuthenticated && (
+               
                 <NavItem>
                   <Button
                     id="qsLoginBtn"
@@ -75,9 +77,10 @@ const NavBar = () => {
                     className="btn-margin"
                     onClick={() => loginWithRedirect()}
                   >
-                    Log in
+                    Get Started
                   </Button>
                 </NavItem>
+
               )}
               {isAuthenticated && (
                 <UncontrolledDropdown nav inNavbar>
@@ -100,14 +103,7 @@ const NavBar = () => {
                       <FontAwesomeIcon icon="user" className="mr-3" /> Profile
                     </DropdownItem>
 
-                    <DropdownItem
-                      tag={RouterNavLink}
-                      to="/dashboard"
-                      className="dropdown-profile"
-                      activeClassName="router-link-exact-active"
-                    >
-                      <FontAwesomeIcon icon="chart-line" className="mr-3" /> Dashboard
-                    </DropdownItem>
+                   
 
 
                     <DropdownItem
@@ -183,6 +179,7 @@ const NavBar = () => {
               </Nav>
             )}
           </Collapse>
+      
         </Container>
       </Navbar>
     </div>

@@ -1,19 +1,17 @@
 {
   "name": "auth0-react-sample",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "scripts": {
-    "start": "npm-run-all --parallel spa api-server",
+    "start": "node index.js",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jest-environment-jsdom-sixteen",
     "eject": "react-scripts eject",
     "spa": "react-scripts start",
     "server": "node index.js",
     "server:dev": "nodemon index.js",
-    "api-server": "node index.js",
-    "api-server:dev": "nodemon api-server.js",
     "dev": "npm-run-all --parallel spa server:dev",
-    "prod": "npm-run-all --parallel server api-server"
+    "prod": "npm-run-all --parallel server"
   },
   "dependencies": {
     "@auth0/auth0-react": "^1.2.0",
@@ -38,12 +36,14 @@
     "react-bootstrap-icons": "^1.4.0",
     "react-datetime-picker": "^3.2.0",
     "react-dom": "^16.8.6",
+    "react-rainbow-components": "^1.25.0",
     "react-redux": "^7.2.3",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.0",
     "reactstrap": "^8.9.0",
     "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "sqlite3": "^5.0.2"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.10.1",
