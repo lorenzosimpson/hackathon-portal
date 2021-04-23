@@ -36,7 +36,7 @@ const App = (props) => {
 
     useEffect(() => {
       putUser()
-    }, [user])
+    }, [user, isAuthenticated])
 
     const putUser = async () => {
       try {
