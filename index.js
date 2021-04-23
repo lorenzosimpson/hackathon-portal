@@ -1,6 +1,6 @@
 const dotenv = require('dotenv').config();
 const server = require('./Api/server.js');
-const port = process.env.SERVER_PORT;
+const port = process.env.PORT;
 const path = require('path')
 const express = require('express')
 
