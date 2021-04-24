@@ -57,7 +57,7 @@ exports.seed = function (knex) {
           android_spots: 0,
           data_science_spots: 0,
           ux_spots: 0,
-          creator_id: 0,
+          creator_id: 1,
           hackathon_id: 3,
           is_solo: true,
           is_solo_and_taken: false
