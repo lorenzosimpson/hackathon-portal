@@ -5,7 +5,8 @@ module.exports = {
     findById,
     updateUser,
     deleteUser,
-    addUser
+    addUser,
+    findByAuth0Sub
 };
 
 async function find() {
@@ -14,6 +15,10 @@ async function find() {
 
 async function findById(id) {
     return await db('users').where({ id }).first().select('id', 'username', 'email');
+}
+
+async function findByAuth0Sub(auth0Sub) {
+    return await db('users').where({ auth0Sub }).first()
 }
 
 async function updateUser(id, changes) {

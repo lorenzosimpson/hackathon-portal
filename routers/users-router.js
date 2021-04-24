@@ -32,10 +32,10 @@ router.get('/:id', async (req, res) => {
 });
 
 router.put('/:id', async (req, res) => {
-   const { id } = req.params;
+   const { auth0Sub } = req.params;
    const changes = req.body;
    try {
-      const user = await userDb.findById(id);
+      const user = await userDb.findByAuth0Sub(auth0Sub)
       if (user) {
          const updated = await userDb.updateUser(id, changes);
          delete updated.password
@@ -44,9 +44,7 @@ router.put('/:id', async (req, res) => {
       } else {
          console.log(id, user)
          const added = await userDb.addUser(id, changes);
-         res.status(201).json({
-            message: `Created user with id ${id}`
-         });
+         res.status(201).json(added);
       }
    } catch (err) {
       res.status(500).json(err);
