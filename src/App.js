@@ -45,7 +45,8 @@ const App = (props) => {
         const url = process.env.REACT_APP_SERVER_URL
         const res = await axios.put(`${url}/api/users/${id}`, {
           username: user.nickname,
-          email: user.email
+          email: user.email,
+          user_id: id
         },{
           headers: {
             Authorization: `Bearer ${token}`

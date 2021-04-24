@@ -1,7 +1,8 @@
 exports.up = function (knex) {
     return knex.schema
       .createTable('user_hackathons', tbl => {
-        tbl.increments()
+        tbl.varchar('id')
+        .unique()
         tbl.integer('hackathon_id')
           .notNullable()
           .references('id')
