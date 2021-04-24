@@ -1,6 +1,6 @@
 exports.up = function(knex) {
     return knex.schema.createTable('hackathons', tbl => {
-       tbl.increments()
+       tbl.increments();
        tbl.string('name', 255).notNullable();
        tbl.string('description', 1500);
        tbl.string('url');
