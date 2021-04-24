@@ -8,7 +8,6 @@ exports.up = function (knex) {
           .unique()
         tbl.varchar('email', 255)
           .unique()
-        tbl.string('password')
         tbl.boolean('email_Verified')
       })
   };
