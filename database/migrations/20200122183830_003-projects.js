@@ -9,7 +9,7 @@ exports.up = function (knex) {
         tbl.boolean('is_approved')
         .notNullable()
         .defaultTo(false)
-        tbl.integer('creator_id') // person that's submitting the project
+        tbl.varchar('creator_id') // person that's submitting the project
         .notNullable()
         .references('id')
         .inTable('users')
