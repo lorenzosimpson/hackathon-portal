@@ -88,10 +88,9 @@ router.post('/u/:id', async (req, res) => {
    const { id } = req.params;
    const validateCreation = validateHackathon(hackathon);
    hackathon.organizer_id = id;
-   console.log('from post request', hackathon)
    try {
-      const added = await hackathonDb.insert(hackathon);
-      const new_hackathon = await hackathonDb.findById(added.id);
+      const [added] = await hackathonDb.insert(hackathon);
+      const new_hackathon = await hackathonDb.findById(added);
       const hackathon_id = new_hackathon.id;
       const new_instance = {
          user_id: id,

@@ -32,9 +32,5 @@ async function deleteUser(id) {
 }
 
 async function addUser(user) {
-    await db('users').insert(user)
-    .then(ids => {
-        const [id] = ids
-        return findById(id)
-    })
+    return await db('users').insert(user)
 }

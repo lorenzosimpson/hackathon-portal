@@ -37,14 +37,14 @@ router.put('/:id', async (req, res) => {
    changes.id = id
    try {
       const user = await userDb.findById(id)
-      console.log(user)
       if (user) {
          const updated = await userDb.updateUser(id, changes);
          delete updated.password
          res.status(200).json(updated);
       } else {
          const added = await userDb.addUser(changes);
-         res.status(201).json(added);
+         const newUser = await userDb.findById(id)
+         res.status(201).json(newUser);
       }
    } catch (err) {
       res.status(500).json(err);
