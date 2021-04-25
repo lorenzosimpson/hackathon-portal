@@ -103,9 +103,9 @@ router.post('/u/:id', async (req, res) => {
       res.status(201).json(added);
    } catch(err) {
       res.status(500).json({
-         message: 'Could not add hackathon'
+         message: 'Could not add hackathon',
+         error: err
       });
-      console.log(err)
    }
 });
 
