@@ -88,8 +88,8 @@ router.post('/u/:id', async (req, res) => {
    const { id } = req.params;
    const validateCreation = validateHackathon(hackathon);
    hackathon.organizer_id = id;
-
-   if (validateCreation.isSuccessful === true) {
+   console.log('from post request', hackathon)
+   try {
       const added = await hackathonDb.insert(hackathon);
       const new_hackathon = await hackathonDb.findById(added.id);
       const hackathon_id = new_hackathon.id;
@@ -100,10 +100,9 @@ router.post('/u/:id', async (req, res) => {
       };
       userHackathon.insertHackathonInstance(new_instance);
       res.status(201).json(added);
-   } else {
+   } catch {
       res.status(500).json({
-         message: 'Could not add hackathon',
-         errors: validateCreation.errors
+         message: 'Could not add hackathon'
       });
    }
 });
