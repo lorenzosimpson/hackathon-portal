@@ -126,7 +126,7 @@ function CreateHackathonForm(props) {
             </div>
 
              
-            <div className="d-flex justify-content-end">
+            <div className="d-flex justify-content-end mt-4">
                 <button className="btn btn-primary" type="submit">Submit</button> 
             </div>
             </FormGroup>
