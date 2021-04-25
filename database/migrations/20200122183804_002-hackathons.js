@@ -9,7 +9,7 @@ exports.up = function(knex) {
        tbl.string('end_date').notNullable();
        tbl.boolean('is_open');
        tbl.integer('max_team_participants') // for organizer to set
-       tbl.integer('organizer_id')
+       tbl.varchar('organizer_id')
           .references('id')
           .inTable('users')
           .onUpdate('CASCADE')

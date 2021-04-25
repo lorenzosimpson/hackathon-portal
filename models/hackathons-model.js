@@ -23,7 +23,7 @@ async function findByOrganizerId(organizer_id) {
 }
 
 async function insert(hackathon) {
-    return await db('hackathons').insert(hackathon, 'id')
+    return await db('hackathons').insert(hackathon)
         .then(ids => {
             const [id] = ids
             return findById(id)

@@ -57,7 +57,7 @@ function CreateHackathonForm(props) {
 
     async function handleValidSubmit(e) {
         e.persist();
-        const creatorId = user.sub.replace("auth0|", "")
+        const creatorId = user.sub
         const body = {
             ...hackathonData, 
             start_date: start_date,

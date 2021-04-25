@@ -8,7 +8,7 @@ exports.up = function (knex) {
           .inTable('hackathons')
           .onUpdate('CASCADE')
           .onDelete('CASCADE')
-        tbl.integer('user_id')
+        tbl.varchar('user_id')
           .notNullable()
           .references('id')
           .inTable('users')

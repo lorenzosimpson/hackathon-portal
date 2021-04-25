@@ -37,7 +37,10 @@ async function deleteUser(id) {
 }
 
 async function addUser(auth0Sub, user) {
-    await db('users').insert(user)
+    await db('users').insert({
+        ...user,
+        id: auth0Sub
+    })
     .then(ids => {
         const [id] = ids
         return findById(id)
