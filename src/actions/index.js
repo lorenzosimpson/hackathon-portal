@@ -31,7 +31,6 @@ export const fetchHackathons = () => async dispatch => {
 }
 
 export const createHackathon = (creatorId, hackathonData, path) => async dispatch => {
-    console.log(hackathonData)
     dispatch({ type: POST_START });
     (await axiosWithAuth())
     .post(`/hackathons/u/${creatorId}`, hackathonData)

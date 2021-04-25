@@ -10,7 +10,6 @@ exports.up = function (knex) {
           .unique()
         tbl.varchar('email', 255)
         tbl.boolean('email_Verified')
-        tbl.varchar('auth0Sub')
       })
   };
   

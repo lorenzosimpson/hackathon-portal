@@ -31,18 +31,19 @@ router.get('/:id', async (req, res) => {
    }
 });
 
-router.put('/:auth0Sub', async (req, res) => {
-   const { auth0Sub } = req.params;
+router.put('/:id', async (req, res) => {
+   const { id } = req.params;
    const changes = req.body;
+   changes.id = id
    try {
-      const user = await userDb.findById(auth0Sub)
-      changes.auth0Sub = auth0Sub
+      const user = await userDb.findById(id)
+      console.log(user)
       if (user) {
-         const updated = await userDb.updateUser(auth0Sub, changes);
+         const updated = await userDb.updateUser(id, changes);
          delete updated.password
          res.status(200).json(updated);
       } else {
-         const added = await userDb.addUser(auth0Sub, changes);
+         const added = await userDb.addUser(changes);
          res.status(201).json(added);
       }
    } catch (err) {
@@ -50,7 +51,6 @@ router.put('/:auth0Sub', async (req, res) => {
       console.log(err)
    }
 });
-
 
 
 router.delete('/:id', async (req, res) => {

@@ -98,7 +98,8 @@ router.post('/u/:id', async (req, res) => {
          hackathon_id: hackathon_id,
          user_hackathon_role: 'organizer'
       };
-      userHackathon.insertHackathonInstance(new_instance);
+      const addedInstance = await userHackathon.insertHackathonInstance(new_instance);
+      console.log(addedInstance)
       res.status(201).json(added);
    } catch {
       res.status(500).json({
