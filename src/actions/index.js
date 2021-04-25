@@ -37,12 +37,13 @@ export const createHackathon = (creatorId, hackathonData, path) => async dispatc
     .then(response => {
         dispatch({ type: POST_SUCCESS, payload: response.data })
         dispatch(fetchHackathons()).then(() => dispatch(redirectTo(path)))
+        .catch(err => console.log('error fetching after creating', err))
         .then(() => dispatch({ type: REDIRECT_COMPLETE}))
+        .catch(err => console.log('error redirecting', err))
         })
     .catch(error => {
         dispatch({ type: FETCH_FAILURE, payload: error.response })
         console.log('error in create')
-        throw new Error('error in create')
     })
 }
 
