@@ -37,15 +37,11 @@ router.put('/:auth0Sub', async (req, res) => {
    try {
       const user = await userDb.findByAuth0Sub(auth0Sub)
       changes.auth0Sub = auth0Sub
-      console.log(user)
       if (user) {
-         console.log('update')
          const updated = await userDb.updateUser(auth0Sub, changes);
          delete updated.password
-         console.log('put user')
          res.status(200).json(updated);
       } else {
-         console.log('add')
          const added = await userDb.addUser(auth0Sub, changes);
          res.status(201).json(added);
       }

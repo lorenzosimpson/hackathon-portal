@@ -62,7 +62,7 @@ function CreateHackathonForm(props) {
             ...hackathonData, 
             start_date: start_date,
              end_date: end_date,
-             is_open: checked
+             is_open: checked,
             }
         // will dispatch a series of actions that will redirect if no error
         dispatch(createHackathon(creatorId, body, '/dashboard'))
