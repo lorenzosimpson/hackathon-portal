@@ -101,10 +101,11 @@ router.post('/u/:id', async (req, res) => {
       const addedInstance = await userHackathon.insertHackathonInstance(new_instance);
       console.log(addedInstance)
       res.status(201).json(added);
-   } catch {
+   } catch(err) {
       res.status(500).json({
          message: 'Could not add hackathon'
       });
+      console.log(err)
    }
 });
 
