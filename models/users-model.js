@@ -21,12 +21,12 @@ async function findByAuth0Sub(auth0Sub) {
     return await db('users').where({ auth0Sub }).first()
 }
 
-async function updateUser(id, changes) {
+async function updateUser(auth0Sub, changes) {
     await db('users')
-        .where({ id })
+        .where({ auth0Sub })
         .update(changes)
     return db('users')
-        .where({ id })
+        .where({ auth0Sub })
         .first()
 }
 
@@ -36,11 +36,8 @@ async function deleteUser(id) {
         .del()
 }
 
-async function addUser(id, user) {
-    await db('users').insert({
-        ...user,
-        id: id
-    })
+async function addUser(auth0Sub, user) {
+    await db('users').insert(user)
     .then(ids => {
         const [id] = ids
         return findById(id)

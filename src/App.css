@@ -5,8 +5,8 @@
 .navbar-brand.logo, .logo {
   background-image: url('./assets/HackathonLogo.png') !important;
   padding: 0;
-  height: 3.1em;
-  width: 7.2em;
+  width: 150px;
+  height: 150px;
   background-color: inherit;
   box-shadow: none;
 }

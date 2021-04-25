@@ -46,7 +46,6 @@ const App = (props) => {
         const res = await axios.put(`${url}/api/users/${id}`, {
           username: user.nickname,
           email: user.email,
-          user_id: id
         },{
           headers: {
             Authorization: `Bearer ${token}`

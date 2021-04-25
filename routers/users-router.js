@@ -31,23 +31,27 @@ router.get('/:id', async (req, res) => {
    }
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:auth0Sub', async (req, res) => {
    const { auth0Sub } = req.params;
    const changes = req.body;
    try {
       const user = await userDb.findByAuth0Sub(auth0Sub)
+      changes.auth0Sub = auth0Sub
+      console.log(user)
       if (user) {
-         const updated = await userDb.updateUser(id, changes);
+         console.log('update')
+         const updated = await userDb.updateUser(auth0Sub, changes);
          delete updated.password
          console.log('put user')
          res.status(200).json(updated);
       } else {
-         console.log(id, user)
-         const added = await userDb.addUser(id, changes);
+         console.log('add')
+         const added = await userDb.addUser(auth0Sub, changes);
          res.status(201).json(added);
       }
    } catch (err) {
       res.status(500).json(err);
+      console.log(err)
    }
 });
 

@@ -19,7 +19,6 @@ exports.seed = function (knex) {
         { hackathon_id: 2, user_id: "8", user_hackathon_role: 'organizer' },
         { hackathon_id: 1, user_id: "9", user_hackathon_role: 'judge' },
         { hackathon_id: 2, user_id: "9", user_hackathon_role: 'organizer' },
-      
       ]);
     });
 };
