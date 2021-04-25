@@ -11,6 +11,9 @@
   box-shadow: none;
 }
 
+.btn-primary {
+  text-transform: uppercase;
+}
 
 /* Fix for use only flexbox in content area */
 .next-steps .row {
